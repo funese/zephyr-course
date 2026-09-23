@@ -39,6 +39,26 @@ First build the application:
 ./bin/west build -b xiao_ble app -d build/xiao_ble
 ```
 
+To change the blink interval interactively, open menuconfig for this same
+build directory:
+
+```sh
+./bin/west build -d build/xiao_ble -t menuconfig
+```
+
+Select `LED Subsystem` -> `LED blink sleep time`, choose an interval, save,
+and exit. Rebuild before flashing:
+
+```sh
+./bin/west build -d build/xiao_ble
+./flash_stlink.sh
+```
+
+The `-d build/xiao_ble` option is important. Running `west build -t
+menuconfig` without `-d build/xiao_ble` edits `build/zephyr/.config`, while the
+ST-Link workflow flashes `build/xiao_ble/zephyr/.config` and its generated
+firmware. Those are separate configurations.
+
 Then flash it through the ST-Link:
 
 ```sh
